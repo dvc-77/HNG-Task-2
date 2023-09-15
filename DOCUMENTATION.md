@@ -1,74 +1,117 @@
-# Installation and Setup
+# HNG-Stage-Two
 
-## Prerequisites
+## Built with
 
-Before you proceed, make sure you have the following prerequisites installed on your development environment:
+- FastAPI
+- PostgreSQL
+- Render
 
-1. **PYTHON**: Run this command `python --version` to check you have Python installed on your machine. Otherwise, Download and install Python on your machine here: https://www.python.org/downloads/. 
+### Testing
+- Thunderbird Client
 
-2. **Database**: FastAPI supports multiple database systems, including PostgreSQL, MySQL, SQLite, Oracle, Microsoft SQL Server, etc. Ensure you have one of these databases installed and configured. PostgreSQL was used for this project. Download and install Postgres here: https://www.postgresql.org/download/
+### Features:
 
-3. **Git**: Git is a version control system for managing the project's source code. Download and install git here: https://git-scm.com/downloads
+- Retrieve Slack name and track information.
+- Get the current day of the week and UTC time.
+- Access GitHub URLs for the executed file and the project's source code.
+- Response format adheres to JSON standards.
+- Endpoint accessible publicly on Render.
 
-The remaining prerequisites are libraries. These will be installed from the requirements.txt file in the project as we proceed.
+## Endpoints
 
-## Cloning and Preparing the FastAPI Application
-
-Follow these steps to clone and prepare the application:
-
-### 1\. Clone the Repository
-
-Clone the repository from Github using the following commands:
-
-```bash
-git clone https://github.com/adelajaOlamilekan/hng10_task2.git
- ```
-
-### 2\. Navigate to Your Project Directory
-
-Change your current working directory to the cloned project folder:
-
-```bash
-cd hng10_task2
- ```
-
-### 3\. Install Project Dependencies
-
-Use pip to install the project's dependencies:
-
-```bash
-pip install -r requirements.txt
- ```
-
-### 4\. Copy the Environment File
-
-Make a copy of the provided `.env.example` file and name it `.env`:
-
-```bash
-cp .env.example .env
- ```
-
-Edit the `.env` file to configure your database connection, application URL, and any other necessary configuration options.
-
-### 5\. Migrate the Database
-
-Run the database migrations to create the necessary database tables:
-
-```bash
-alembic init alembic
- ```
-```
-alembic revision --autogenerate -m "Initial Migration"
+- `/api`: 
+   - Method: POST
+   - Body:
+        ```json
+        {
+          "name": "Neil Ohene"
+        }
+        ```
+### Response
+```json
+{
+  "name": "Neil Ohene",
+  "date_created": "2023-09-15T19:53:53Z",
+  "last_updated": "2023-09-15T19:53:53Z",
+  "message": "Person Created Successfuly"
+}
 ```
 
-### 8\. Start the Development Server
+- `/api`: 
+   - Method: GET
+   - Purpose: Return all users
+   - Example: GET https://hng-stageone-task.onrender.com/api
 
-To start a development server, use the following command:
+ ### Response
+```json
+{
+   {
+    "id": 1,
+    "name": "neil ohene"
+  },
+  {
+    "id": 2,
+    "name": "albert essilfie"
+  },
+  {
+    "id": 3,
+    "name": "kwesi brako"
+  }
+}
+```
 
-```bash
-uvicorn main:app --reload
- ```
+- `/api/{id}`: 
+   - Method: GET
+   - Purpose: Return specific user
+   - Example: GET https://hng-stageone-task.onrender.com/api/1
 
-This will start a development server at `http://localhost:8000`. Access your application by visiting this URL in your web browser.
+ ### Response
+```json
+{
 
-_Voila!_
+    "id": 1,
+    "name": "neil ohene"
+}
+```
+
+- `/api/{id}`: 
+   - Method: PATCH
+   - Purpose: Update specific user
+   - Example: PUT https://hng-stageone-task.onrender.com/api/1
+
+- Body:
+        ```json
+        {
+          "name": "Nsiah otoo"
+        }
+        ```
+
+ ### Response
+```json
+{
+  "name": "nsiah otoo",
+  "last_updated": "2023-09-15T19:53:53Z",
+  "message": "Name updated to Nsiah Otoo successfully"
+}
+```
+
+- `/api/{id}`:
+    - Method: DELETE
+    - Purpose: Delete specific user
+    - Example: DELETE https://hng-stageone-task.onrender.com/api/1
+    
+     ### Response
+    ```json
+    {
+      "message": "Person deleted successfully"
+    }
+    ```
+
+### Getting Started:
+Follow these steps to run this repo locally:
+
+- Fork or Clone the repository: git clone https://github.com/dvc-77/HNG-Task-2.git
+- Create a virtual environment and install dependencies using `pip install -r requirements.txt`.
+- Run the FastAPI app using `uvicorn main:app --reload --port=8000`.
+- Access the API at http://localhost:8000/api and provide the required psyload. 
+    - Example: `/api?slack_name=Neil%20Ohene&track=backend`
