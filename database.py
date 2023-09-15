@@ -5,8 +5,9 @@ from sqlalchemy.ext.declarative import declarative_base
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
 
-DATABASE_URL = "postgresql://ohene:ohene12345@postgresql-145522-0.cloudclusters.net:18019/ohene"
+DATABASE_URL = os.environ("DATABASE_URL")
 
 # postgresql://username:password@host:port/database_name
 engine = create_engine(DATABASE_URL)
